@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import ListItem from "./components/listItem.jsx";
 import Button from "./components/button.jsx";
+import ProductsList from "./components/productsList";
+import Modal from "./components/modal.jsx";
 
 function App() {
   return (
     <Wrapper>
+      {/* <Modal /> */}
+
       <Header>
         <div
           style={{
@@ -20,31 +23,7 @@ function App() {
 
         <Button text="Add Item" />
       </Header>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          paddingTop: 120,
-        }}
-        className="container"
-      >
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-      </div>
+      <ProductsList />
     </Wrapper>
   );
 }
