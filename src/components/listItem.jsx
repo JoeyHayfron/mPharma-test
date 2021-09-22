@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./button";
 
-const ListItem = () => {
+const ListItem = ({ name, price }) => {
   return (
     <Wrapper>
       <LeftPatch />
       <Details>
         <Info>
-          <Drug>Paracetamol Paracetamol</Drug>
-          <Price>Price: GHC 2.00</Price>
+          <Drug>{name}</Drug>
+          <Price>Price: GHC {price}</Price>
         </Info>
         <ButtonGroup>
           <Button text="Edit" />

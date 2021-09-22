@@ -1,15 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import ListItem from "./listItem";
+import { getLatestPrice } from "../utils/helper";
 
-const products = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const ProductsList = () => {
+const ProductsList = ({ productList }) => {
+  const getLatestProductPrice = (product) => {
+    return getLatestPrice(
+      product.prices.map((item) => productList.entities.prices[item])
+    );
+  };
   return (
     <Wrapper className="container">
-      {products.map((item, index) => (
-        <ListItem key={index} />
-      ))}
+      {productList.entities
+        ? Object.keys(productList.entities.products).map((item, index) => (
+            <ListItem
+              key={index}
+              name={productList.entities.products[item].name}
+              price={
+                getLatestProductPrice(productList.entities.products[item]).price
+              }
+            />
+          ))
+        : ""}
     </Wrapper>
   );
 };

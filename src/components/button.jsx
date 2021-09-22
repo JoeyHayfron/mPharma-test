@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = ({ text }) => {
-  return <Wrapper>{text}</Wrapper>;
+const Button = ({ text, onClick }) => {
+  return <Wrapper onClick={onClick}>{text}</Wrapper>;
 };
 
 export default Button;
