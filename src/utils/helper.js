@@ -18,5 +18,7 @@ export const getLatestPrice = (prices) => {
     })
   );
 
-  return prices.filter((item) => item.date !== latestDate)[0];
+  return prices.find(
+    (item) => new Date(item.date) == new Date(latestDate).toString()
+  );
 };

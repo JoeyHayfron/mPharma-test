@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = ({ text, onClick }) => {
-  return <Wrapper onClick={onClick}>{text}</Wrapper>;
+const Button = ({ children, onClick }) => {
+  return <Wrapper onClick={onClick}>{children}</Wrapper>;
 };
 
 export default Button;
@@ -17,6 +17,7 @@ const Wrapper = styled.button`
   text-align: center;
   border: none;
   display: flex;
+  text-transform: capitalize;
 
   &:hover {
     background: #fc6a43;

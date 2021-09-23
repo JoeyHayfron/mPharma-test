@@ -1,31 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import Button from "./components/button.jsx";
-import ProductsList from "./components/productsList";
+import Button from "./components/button/button.jsx";
+import ProductsList from "./components/productList/productsList";
 import { connect } from "react-redux";
-import Modal from "./components/modal.jsx";
-import { HTTP_GET_REQUEST } from "./services/http";
+import Modal from "./components/modal/modal.jsx";
 import { showModal } from "./redux/actions/ui";
-import { normalizedData } from "./utils/helper";
-import { storeData } from "./services/localStorage.js";
+import { fetchEntitiesAsync } from "./redux/actions/app/index.js";
+import ClipLoader from "react-spinners/ClipLoader";
 
-function App({ modalVisible, showModal }) {
-  const [productList, setProductList] = useState([]);
-
+export function App({
+  modalVisible,
+  showModal,
+  fetchEntitiesAsync,
+  isLoading,
+  entities,
+}) {
   useEffect(() => {
-    let url = "http://www.mocky.io/v2/5c3e15e63500006e003e9795";
-    HTTP_GET_REQUEST(
-      url,
-      (res) => {
-        let data = normalizedData(res.data.products);
-        setProductList(data);
-        storeData("products", 1, data.entities.products[1]);
-        console.log("RES", normalizedData(res.data.products));
-      },
-      (error) => console.log("ERROR", error),
-      () => {}
-    );
+    fetchEntitiesAsync();
   }, []);
+
+  if (isLoading)
+    return (
+      <ClipLoader
+        color="#fe5100"
+        loading={isLoading}
+        size={50}
+        css={{ alignSelf: "center" }}
+      />
+    );
 
   return (
     <Wrapper>
@@ -41,21 +43,32 @@ function App({ modalVisible, showModal }) {
           <Logo src="/images/mPharma.jpeg" />
           <h2>mPharma Products List</h2>
         </div>
-        <Button text="Add Item" onClick={() => showModal({ data: "DATA" })} />
+        <Button
+          onClick={() =>
+            showModal({ action: "add-product", title: "Add Product" })
+          }
+        >
+          Add Item
+        </Button>
       </Header>
-      <ProductsList productList={productList} />
+      <ProductsList productList={entities} />
     </Wrapper>
   );
 }
 const mapStateToProps = (state) => {
   return {
     modalVisible: state.ui.showModal,
+    isLoading: state.app.isLoading,
+    entities: state.app.entities,
+    errorMessage: state.app.errorMessage,
+    isAdding: state.app.isAdding,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (data) => dispatch(showModal(data)),
+    fetchEntitiesAsync: () => dispatch(fetchEntitiesAsync()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

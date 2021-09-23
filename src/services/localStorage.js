@@ -1,19 +1,11 @@
 import localforage from "localforage";
 
-export const storeData = (instanceName, key, value) => {
-  var instance = localforage.createInstance({
-    name: instanceName,
-  });
-
-  return instance.setItem(key, value);
+export const storeData = (key, value) => {
+  return localforage.setItem(key, value);
 };
 
-const getData = (instanceName, key, value) => {
-  var instance = localforage.createInstance({
-    name: instanceName,
-  });
-
-  return instance.getItem(key, value);
+export const getData = (key, value) => {
+  return localforage.getItem(key, value);
 };
 
 const removeData = (instanceName, key, value) => {

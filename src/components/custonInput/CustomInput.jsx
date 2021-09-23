@@ -5,7 +5,12 @@ const CustomInput = ({ label, ...props }) => {
   return (
     <Wrapper>
       <label>{label}</label>
-      <Input type="text" onChange={props.handleOnChange} value={props.value} />
+      <Input
+        type="text"
+        onChange={props.onChange}
+        value={props.value}
+        data-testid="test_customInput"
+      />
     </Wrapper>
   );
 };
